@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chaos 8 Ball</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #34345a, #111);
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 0 0 15px cyan;
+}
+
+.ball {
+    width: 320px;
+    height: 320px;
+    background: black;
+    border-radius: 50%;
+    margin: 25px auto;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow:
+        inset -20px -20px 40px rgba(255,255,255,0.08),
+        0 0 40px rgba(255,255,255,0.15);
+}
+
+.window {
+    width: 160px;
+    height: 140px;
+    background: #2563eb;
+
+    clip-path: polygon(
+        50% 0%,
+        0% 100%,
+        100% 100%
+    );
+}
+
+.answer {
+    position: absolute;
+    z-index: 100;
+
+    width: 240px;
+
+    color: #fff700;
+    font-size: 30px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1;
+
+    text-shadow:
+        0 0 5px currentColor,
+        0 0 10px currentColor,
+        0 0 20px currentColor,
+        0 0 40px currentColor,
+        2px 2px 0 #000,
+        4px 4px 0 #000,
+        6px 6px 0 #000;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 22px;
+    font-weight: bold;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    background: #ff00aa;
+    color: white;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #ff35bc;
+}
+
+.status {
+    margin-top: 20px;
+    font-size: 22px;
+    min-height: 40px;
+}
+
+.shake {
+    animation: shake 0.8s;
+}
+
+@keyframes shake {
+    0%  { transform: rotate(0deg); }
+    10% { transform: rotate(-8deg); }
+    20% { transform: rotate(8deg); }
+    30% { transform: rotate(-8deg); }
+    40% { transform: rotate(8deg); }
+    50% { transform: rotate(-6deg); }
+    60% { transform: rotate(6deg); }
+    70% { transform: rotate(-4deg); }
+    80% { transform: rotate(4deg); }
+    90% { transform: rotate(-2deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.7) rotate(-5deg);
+    }
+
+    75% {
+        transform: scale(1.2) rotate(5deg);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎱 CHAOS 8 BALL 🎱</h1>
+
+    <div id="ball" class="ball">
+        <div class="window"></div>
+        <div id="answer" class="answer">8</div>
+    </div>
+
+    <button onclick="shakeBall()">SHAKE IT!</button>
+
+    <div id="status" class="status">
+        Click the button and tempt fate...
+    </div>
+
+</div>
+
+<script>
+
+const responses = [
+    "GET FUCKED",
+    "NO FUCKING WAY JOSE",
+    "PROBABLY MAYBE",
+    "WHO CARES",
+    "NO YOU SUCK ASS",
+    "SURE LIFE IS MEANINGLESS",
+    "TRY AGAIN WHEN I GIVE A SHIT",
+    "MAYBE MAYBE NOT"
+];
+
+const colors = [
+    "#fff700",
+    "#00ffff",
+    "#ff66ff",
+    "#66ff66",
+    "#ff4444",
+    "#ffa500"
+];
+
+function shakeBall() {
+
+    const ball = document.getElementById("ball");
+    const answer = document.getElementById("answer");
+    const status = document.getElementById("status");
+
+    answer.textContent = "...";
+    status.textContent = "Consulting the chaos...";
+
+    ball.classList.add("shake");
+
+    setTimeout(() => {
+
+        const randomAnswer =
+            responses[Math.floor(Math.random() * responses.length)];
+
+        const randomColor =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        answer.style.color = randomColor;
+
+        if (randomAnswer.length > 22) {
+            answer.style.fontSize = "16px";
+        }
+        else if (randomAnswer.length > 15) {
+            answer.style.fontSize = "20px";
+        }
+        else if (randomAnswer.length > 10) {
+            answer.style.fontSize = "24px";
+        }
+        else {
+            answer.style.fontSize = "30px";
+        }
+
+        answer.textContent = randomAnswer;
+
+        answer.style.animation = "none";
+        answer.offsetHeight;
+        answer.style.animation = "pop 0.5s ease";
+
+        status.textContent = randomAnswer;
+
+        ball.classList.remove("shake");
+
+    }, 1000);
+}
+
+</script>
+
+</body>
+</html>
