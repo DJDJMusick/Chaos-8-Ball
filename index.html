@@ -15,15 +15,19 @@ body {
     background: radial-gradient(circle at top, #34345a, #111);
     font-family: "Comic Sans MS", fantasy, sans-serif;
     color: white;
+    padding: 20px;
 }
 
 .container {
     text-align: center;
+    width: 100%;
+    max-width: 500px;
 }
 
 h1 {
     font-size: 3rem;
     text-shadow: 0 0 15px cyan;
+    margin: 20px 0;
 }
 
 .ball {
@@ -141,6 +145,51 @@ button:hover {
     100% {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+/* iPhone/Mobile Responsive Design */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin: 15px 0;
+    }
+
+    .ball {
+        width: 240px;
+        height: 240px;
+        margin: 20px auto;
+    }
+
+    .window {
+        width: 120px;
+        height: 105px;
+    }
+
+    .answer {
+        width: 180px;
+        font-size: 24px;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 18px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .status {
+        margin-top: 15px;
+        font-size: 18px;
+        min-height: 30px;
     }
 }
 </style>
