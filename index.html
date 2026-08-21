@@ -207,7 +207,7 @@ button:hover {
         <div id="answer" class="answer">8</div>
     </div>
 
-    <button onclick="shakeBall()">SHAKE IT!</button>
+    <button id="shakeBtn" onclick="shakeBall()">SHAKE IT!</button>
 
     <div id="status" class="status">
         Click the button and tempt fate...
@@ -236,6 +236,9 @@ const colors = [
     "#ff4444",
     "#ffa500"
 ];
+
+let lastShakeTime = 0;
+let isShaking = false;
 
 function shakeBall() {
 
@@ -280,8 +283,37 @@ function shakeBall() {
         status.textContent = randomAnswer;
 
         ball.classList.remove("shake");
+        isShaking = false;
 
     }, 1000);
+}
+
+// Device motion detection for shake
+if (window.DeviceMotionEvent) {
+    window.addEventListener('devicemotion', (event) => {
+        const acceleration = event.acceleration;
+        
+        if (acceleration) {
+            const x = acceleration.x || 0;
+            const y = acceleration.y || 0;
+            const z = acceleration.z || 0;
+            
+            // Calculate the magnitude of acceleration
+            const magnitude = Math.sqrt(x * x + y * y + z * z);
+            
+            // Threshold for shake detection (adjust sensitivity as needed)
+            if (magnitude > 30 && !isShaking) {
+                const currentTime = Date.now();
+                
+                // Prevent multiple triggers within 1 second
+                if (currentTime - lastShakeTime > 1000) {
+                    lastShakeTime = currentTime;
+                    isShaking = true;
+                    shakeBall();
+                }
+            }
+        }
+    });
 }
 
 </script>
